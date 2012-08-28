@@ -1,0 +1,16 @@
+<form action="/" method="post">
+	<input type="text" name="title" value="" placeholder="enter a task title">
+	<input type="submit" namne="submit" value="Add Task">
+</form>
+
+<div id="task_list">
+	<% unless @tasks.empty? %>
+	<ul>
+	<% @tasks.each do |task| %>
+		<li><%= task.title %>
+	<% end %>
+	</ul>
+	<% else %>
+	<p>No Tasks</p>
+	<% end %>
+</div>
