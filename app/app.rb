@@ -11,7 +11,18 @@ module Tasks
 		end
 		
 		post '/' do
-			params[:title]
+			
+			@task = Task.new(:title => params[:title], :created => Time.now)
+			
+			if @task.save
+				redirect '/'
+			else
+				reditect '/error'
+			end
+		end
+		
+		get '/error' do
+			'an error occured'
 		end
 		
 	end
