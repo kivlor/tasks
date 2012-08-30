@@ -1,0 +1,28 @@
+<form action="/" method="post">
+	<input type="text" name="title" value="" placeholder="enter a task title">
+	<input type="submit" namne="submit" value="Add Task">
+</form>
+
+<div id="task_list">
+	<% unless @open_tasks.empty? %>
+	<h3>Open Tasks</h3>
+	<ul>
+	<% @open_tasks.each do |task| %>
+		<li><%= task.title %> - <a href="/close/<%=task.id%>">Close</a> <a href="/remove/<%=task.id%>">Remove</a>
+	<% end %>
+	</ul>
+	<% end %>
+	
+	<% unless @closed_tasks.empty? %>
+	<h3>Closed Tasks</h3>
+	<ul>
+	<% @closed_tasks.each do |task| %>
+		<li><%= task.title %> - <a href="/open/<%=task.id%>">Open</a> <a href="/remove/<%=task.id%>">Remove</a>
+	<% end %>
+	</ul>
+	<% end %>
+	
+	<% if @tasks.empty? %>	
+	<p>No Tasks</p>
+	<% end %>
+</div>

@@ -1,1 +1,6 @@
+# tmp and db
 tmp/
+db/
+
+# system files
+.DS_Store

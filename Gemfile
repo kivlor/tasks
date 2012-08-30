@@ -4,12 +4,14 @@ source :rubygems
 # Sinatra
 gem		'sinatra',				:require => 'sinatra/base'
 
-# JSON
+# Utils
 gem		'json'
+gem		'bcrypt-ruby',			:require => 'bcrypt'
 
 # Datamapper
-gem		'dm-postgres-adapter'
 gem		'dm-core'
 gem		'dm-migrations'
 gem		'dm-serializer'
 gem		'dm-timestamps'
+gem		'dm-validations'
+gem		'dm-sqlite-adapter'

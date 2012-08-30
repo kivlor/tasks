@@ -3,10 +3,38 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Tasks</title>
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		
+		<link rel="stylesheet" href="/css/vendor/bootstrap.min.css">
+		
+		<style>
+			body {
+				margin-top: 60px;
+			}
+		</style>
 	</head>
 	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a href="/" class="brand">Tasks</a>
+					
+					<% if admin? %>
+					<ul class="nav pull-right">
+						<li><a href="/signout">Signout</a></li>
+					</ul>
+					<% end %>
+				</div>
+			</div>
+		</div>
 		
-		<%= yield %>
+		<div class="container">
+			<%= yield %>
+		</div>
 		
+		<script src="/js/vendor/jquery.min.js"></script>
+		<script src="/js/vendor/bootstrap.min.js"></script>
 	</body>
 </html>
