@@ -13,6 +13,10 @@
 			body {
 				margin-top: 60px;
 			}
+			
+			.margin-bottom {
+				margin-bottom: 20px;
+			}
 		</style>
 	</head>
 	<body>
@@ -31,9 +35,21 @@
 		</div>
 		
 		<div class="container">
-			<%= yield %>
-		</div>
+			<% if admin? %>
+			<%= erb :'admin/nav' %>
+			<% end %>
 		
+			<%= yield %>
+			
+			<div class="row">
+				<div class="span12">
+					<hr>
+					
+					<pre><%= session.inspect %></pre>
+				</div>
+			</div>
+		</div>
+				
 		<script src="/js/vendor/jquery.min.js"></script>
 		<script src="/js/vendor/bootstrap.min.js"></script>
 	</body>

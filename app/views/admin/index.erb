@@ -1,1 +1,46 @@
-<h1>Admin!</h1>
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#open" data-toggle="tab">Open</a></li>
+		<li><a href="#closed" data-toggle="tab">Closed</a></li>
+		<li><a href="#addtask" data-toggle="tab">Add Task</a></li>
+	</ul>
+	
+	<div class="tab-content">
+		<div class="tab-pane active" id="open">
+		<% if @open_tasks.empty? %>
+			<p class="lead">No Open Tasks :)</p>
+		<% else %>
+			<ul>
+				<% @open_tasks.each do |task| %>
+				<li><%= task.title %></li>
+				<% end %>
+			</ul>
+		<% end %>
+		</div>
+		
+		<div class="tab-pane" id="closed">
+		<% if @closed_tasks.empty? %>
+			<p class="lead">No Closed Tasks :(</p>
+		<% else %>
+			<ul>
+				<% @closed_tasks.each do |task| %>
+				<li><%= task.title %></li>
+				<% end %>
+			</ul>
+		<% end %>
+		</div>
+		
+		<div class="tab-pane" id="addtask">
+			<form action="/admin/task/add" method="post">
+				<p>
+					<label for="title">Task Title:</label>
+					<input type="text" name="title" value="">
+				</p>
+				
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">Add Task</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>	

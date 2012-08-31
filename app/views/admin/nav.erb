@@ -1,0 +1,19 @@
+<div class="row margin-bottom">
+	<div class="span12">
+		<% unless @projects.empty? %>
+		<div class="btn-group pull-left">
+			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+				<%= @projects.get(@current_project).title %>
+				<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+				<% @projects.each do |project| %>
+				<li><a href="/admin/project/switch/<%=project.id %>"><%=project.title %></a></li>
+				<% end %>
+			</ul>
+		</div>
+		<% end %>
+		
+		<a href="/admin/project/add" class="btn pull-right">Add Project</a>
+	</div>
+</div>
