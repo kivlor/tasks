@@ -32,6 +32,7 @@
 					</td>
 					<td>
 						<a href="/admin/task/edit/<%= task.id %>" class="btn pull-right">Edit</a>
+						<a href="/admin/task/complete/<%= task.id %>" class="btn pull-right">Complete</a>
 					</td>
 				</tr>
 			<% end %>
@@ -44,6 +45,33 @@
 	<% if @closed_tasks && @closed_tasks.empty? %>
 		<p class="lead">No Closed Tasks :(</p>
 	<% else %>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Title</th>
+					<th>Completed</th>
+					<th class="btn-group-placeholder"></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			<% @closed_tasks.each do |task| %>
+				<tr>
+					<td><%= task.id %></td>
+					<td><%= task.title %></td>
+					<td>
+						<div class="progress progress-success span2">
+							<div class="bar" style="width: <%= task.percent.to_int %>%"></div>
+						</div>
+					</td>
+					<td>
+						<a href="/admin/task/edit/<%= task.id %>" class="btn pull-right">Edit</a>
+					</td>
+				</tr>
+			<% end %>
+			</tbody>
+		</table>
 	<% end %>
 	</div>
 	

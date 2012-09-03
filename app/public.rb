@@ -53,10 +53,10 @@ module Tasks
 				redirect '/error'
 			end
 			
-			@user = User.new(:email => params[:email], :password => params[:password], :created => Time.now)
+			user = User.new(:email => params[:email], :password => params[:password])
 			
-			if @user.save
-				session[:user] = @user
+			if user.valid? && user.save
+				session[:user] = user
 				redirect '/admin'
 			else
 				redirect '/error'

@@ -14,9 +14,10 @@ module Tasks
 		property :password_salt,		String,			:length => 0..255
 		property :password_hash,		String,			:length => 0..255
 		
-		property :created,				DateTime
+		property :created_at,			DateTime
+		property :updated_at,			DateTime
 		
-		validates_with_method :validate_password
+		validates_with_method 			:validate_password
 		
 		def validate_password
 			if self.saved?

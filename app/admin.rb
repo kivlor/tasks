@@ -19,8 +19,8 @@ module Tasks
 		get '/' do
 			@project = Project.get(@current_project)
 			
-			@open_tasks = @project ? @project.tasks.all(:completed => nil) : {}
-			@closed_tasks = @project ? @project.tasks.all(:completed.not => nil) : {}
+			@open_tasks = @project ? @project.tasks.all(:completed_at => nil) : {}
+			@closed_tasks = @project ? @project.tasks.all(:completed_at.not => nil) : {}
 			
 			erb :'admin/index'
 		end
@@ -36,9 +36,9 @@ module Tasks
 		end
 		
 		post '/project/add' do
-			project = Project.create(:title => params[:title], :created => Time.now)
+			project = Project.new(:title => params[:title])
 			
-			if project.save
+			if project.valid? && project.save
 				current_project(project.id)
 				
 				redirect '/admin'
@@ -54,9 +54,9 @@ module Tasks
 		post '/task/add' do
 			project = Project.get(@current_project)
 			
-			project.tasks.create(:title => params[:title], :created => Time.now)
+			project.tasks.new(:title => params[:title])
 			
-			if project.tasks.save
+			if project.tasks.valid? && project.tasks.save
 				redirect '/admin'
 			else
 				redirect '/error'
@@ -74,10 +74,23 @@ module Tasks
 		end
 		
 		post '/task/edit/:task_id' do
-			params.inspect
+			task = Task.get(params[:task_id])
+			
+			if task && task.update(:title => params[:title], :percent => params[:percent].to_i)
+				redirect '/admin'
+			else
+				redirect '/error'
+			end
 		end
 		
-		get '/task/close/:task_id' do
+		get '/task/complete/:task_id' do
+			task = Task.get(params[:task_id])
+			
+			if task && task.update(:completed_at => Time.now.utc)
+				redirect '/admin'
+			else
+				redirect '/error'
+			end
 		end
 	end
 end
