@@ -1,10 +1,15 @@
-<form action="/admin/project/add" method="post">
+<form action="/admin/task/<%= @task ? "edit/#{@task.id}" : 'add' %>" method="post">
 	<p>
 		<label for="title">Task Title:</label>
-		<input type="text" name="title" value="">
+		<input type="text" name="title" value="<%= @task ? @task.title : nil %>">
+	</p>
+	
+	<p>
+		<label for="title">Percentage Completed:</label>
+		<input type="text" name="title" value="<%= @task ? @task.percent : 0 %>">
 	</p>
 	
 	<div class="form-actions">
-		<button type="submit" class="btn btn-primary">Add Task</button>
+		<button type="submit" class="btn btn-primary"><%= @task ? 'Update' : 'Add' %> Task</button>
 	</div>
 </form>

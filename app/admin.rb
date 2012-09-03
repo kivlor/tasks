@@ -13,14 +13,14 @@ module Tasks
 				project = Project.first()
 			end
 			
-			@current_project = session[:current_project] = project.id
+			@current_project = session[:current_project] = project ? project.id : nil
 		end
 		
 		get '/' do
 			@project = Project.get(@current_project)
 			
-			@open_tasks = @project.tasks.all(:completed => nil)
-			@closed_tasks = @project.tasks.all(:completed.not => nil)
+			@open_tasks = @project ? @project.tasks.all(:completed => nil) : {}
+			@closed_tasks = @project ? @project.tasks.all(:completed.not => nil) : {}
 			
 			erb :'admin/index'
 		end
@@ -47,10 +47,6 @@ module Tasks
 			end
 		end
 		
-		get '/project/switch/:project_id' do
-			
-		end
-		
 		get '/task/add' do
 			erb :'admin/task'
 		end
@@ -65,6 +61,20 @@ module Tasks
 			else
 				redirect '/error'
 			end
+		end
+		
+		get '/task/edit/:task_id' do
+			@task = Task.get(params[:task_id])
+			
+			if @task
+				erb :'admin/task'	
+			else
+				redirect '/error'
+			end
+		end
+		
+		post '/task/edit/:task_id' do
+			params.inspect
 		end
 		
 		get '/task/close/:task_id' do

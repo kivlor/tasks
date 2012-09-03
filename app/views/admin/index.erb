@@ -1,46 +1,65 @@
-<div class="tabbable"> <!-- Only required for left/right tabs -->
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="#open" data-toggle="tab">Open</a></li>
-		<li><a href="#closed" data-toggle="tab">Closed</a></li>
-		<li><a href="#addtask" data-toggle="tab">Add Task</a></li>
-	</ul>
-	
-	<div class="tab-content">
-		<div class="tab-pane active" id="open">
-		<% if @open_tasks.empty? %>
-			<p class="lead">No Open Tasks :)</p>
-		<% else %>
-			<ul>
-				<% @open_tasks.each do |task| %>
-				<li><%= task.title %></li>
-				<% end %>
-			</ul>
-		<% end %>
-		</div>
-		
-		<div class="tab-pane" id="closed">
-		<% if @closed_tasks.empty? %>
-			<p class="lead">No Closed Tasks :(</p>
-		<% else %>
-			<ul>
-				<% @closed_tasks.each do |task| %>
-				<li><%= task.title %></li>
-				<% end %>
-			</ul>
-		<% end %>
-		</div>
-		
-		<div class="tab-pane" id="addtask">
-			<form action="/admin/task/add" method="post">
-				<p>
-					<label for="title">Task Title:</label>
-					<input type="text" name="title" value="">
-				</p>
-				
-				<div class="form-actions">
-					<button type="submit" class="btn btn-primary">Add Task</button>
-				</div>
-			</form>
-		</div>
+<% if @project %>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#open" data-toggle="tab">Open</a></li>
+	<li><a href="#closed" data-toggle="tab">Closed</a></li>
+	<li><a href="#addtask" data-toggle="tab">Add Task</a></li>
+</ul>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="open">
+	<% if @open_tasks.empty? %>
+		<p class="lead">No Open Tasks :)</p>
+	<% else %>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Title</th>
+					<th>Completed</th>
+					<th class="btn-group-placeholder"></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			<% @open_tasks.each do |task| %>
+				<tr>
+					<td><%= task.id %></td>
+					<td><%= task.title %></td>
+					<td>
+						<div class="progress progress-success span2">
+							<div class="bar" style="width: <%= task.percent.to_int %>%"></div>
+						</div>
+					</td>
+					<td>
+						<a href="/admin/task/edit/<%= task.id %>" class="btn pull-right">Edit</a>
+					</td>
+				</tr>
+			<% end %>
+			</tbody>
+		</table>
+	<% end %>
 	</div>
-</div>	
+	
+	<div class="tab-pane" id="closed">
+	<% if @closed_tasks && @closed_tasks.empty? %>
+		<p class="lead">No Closed Tasks :(</p>
+	<% else %>
+	<% end %>
+	</div>
+	
+	<div class="tab-pane" id="addtask">
+		<form action="/admin/task/add" method="post">
+			<p>
+				<label for="title">Task Title:</label>
+				<input type="text" name="title" value="">
+			</p>
+			
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">Add Task</button>
+			</div>
+		</form>
+	</div>
+</div>
+<% else %>
+<%= erb :'admin/project' %>
+<% end %>
