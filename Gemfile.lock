@@ -42,6 +42,7 @@ GEM
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
     tilt (1.3.3)
+    time-ago-in-words (0.1.2)
 
 PLATFORMS
   ruby
@@ -57,3 +58,4 @@ DEPENDENCIES
   json
   rack-flash3
   sinatra
+  time-ago-in-words

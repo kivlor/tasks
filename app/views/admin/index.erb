@@ -15,7 +15,8 @@
 				<tr>
 					<th>#</th>
 					<th>Title</th>
-					<th>Completed</th>
+					<th>Percent</th>
+					<th>Created</th>
 					<th class="btn-group-placeholder"></th>
 				</tr>
 			</thead>
@@ -25,15 +26,24 @@
 				<tr>
 					<td><%= task.id %></td>
 					<td><%= task.title %></td>
-					<td>
-						<div class="progress progress-success span2">
-							<div class="bar" style="width: <%= task.percent.to_int %>%"></div>
-						</div>
-					</td>
-					<td>
-						<a href="/admin/task/edit/<%= task.id %>" class="btn pull-right">Edit</a>
-						<a href="/admin/task/complete/<%= task.id %>" class="btn pull-right">Complete</a>
-					</td>
+					<td><div class="progress progress-striped progress-success span2">
+						<div class="bar" style="width: <%= task.percent.to_int %>%"></div>
+					</div></td>
+					<td><%= task.created_at.strftime('%d/%m/%Y') %></td>
+					<td><div class="btn-group pull-right">
+						<a	class="btn dropdown-toggle"
+							data-toggle="dropdown"
+							href="#">
+							<i class="icon-cog"></i> <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/admin/task/view/<%= task.id %>"><i class="icon-eye-open"></i> View/Add Comments</a></li>
+							<li><a href="/admin/task/edit/<%= task.id %>"><i class="icon-edit"></i> Edit</a></li>
+							<li><a href="/admin/task/complete/<%= task.id %>"><i class="icon-ok-sign"></i> Complete</a></li>
+							<li class="divider"></li>
+							<li><a href="/admin/task/delete/<%= task.id %>"><i class="icon-trash"></i> Delete</a></li>
+						</ul>
+					</div></td>
 				</tr>
 			<% end %>
 			</tbody>
@@ -50,6 +60,7 @@
 				<tr>
 					<th>#</th>
 					<th>Title</th>
+					<th>Percent</th>
 					<th>Completed</th>
 					<th class="btn-group-placeholder"></th>
 				</tr>
@@ -61,13 +72,25 @@
 					<td><%= task.id %></td>
 					<td><%= task.title %></td>
 					<td>
-						<div class="progress progress-success span2">
+						<div class="progress progress-striped progress-success span2">
 							<div class="bar" style="width: <%= task.percent.to_int %>%"></div>
 						</div>
 					</td>
-					<td>
-						<a href="/admin/task/edit/<%= task.id %>" class="btn pull-right">Edit</a>
-					</td>
+					<td><%= task.completed_at.strftime('%d/%m/%Y') %></td>
+					<td><div class="btn-group pull-right">
+						<a	class="btn dropdown-toggle"
+							data-toggle="dropdown"
+							href="#">
+							<i class="icon-cog"></i> <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/admin/task/view/<%= task.id %>"><i class="icon-eye-open"></i> View/Add Comments</a></li>
+							<li><a href="/admin/task/edit/<%= task.id %>"><i class="icon-edit"></i> Edit</a></li>
+							<li><a href="/admin/task/reopen/<%= task.id %>"><i class="icon-repeat"></i> Re-open</a></li>
+							<li class="divider"></li>
+							<li><a href="/admin/task/delete/<%= task.id %>"><i class="icon-trash"></i> Delete</a></li>
+						</ul>
+					</div></td>
 				</tr>
 			<% end %>
 			</tbody>
@@ -76,16 +99,7 @@
 	</div>
 	
 	<div class="tab-pane" id="addtask">
-		<form action="/admin/task/add" method="post">
-			<p>
-				<label for="title">Task Title:</label>
-				<input type="text" name="title" value="">
-			</p>
-			
-			<div class="form-actions">
-				<button type="submit" class="btn btn-primary">Add Task</button>
-			</div>
-		</form>
+		<%= erb :'admin/task/form' %>
 	</div>
 </div>
 <% else %>

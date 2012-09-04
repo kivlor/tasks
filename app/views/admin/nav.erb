@@ -2,12 +2,12 @@
 <div class="row margin-bottom">
 	<div class="span12">
 		<div class="btn-group pull-left">
-			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-				<%= @projects.get(@current_project).title %>
-				<span class="caret"></span>
-			</a>
+			<a href="/admin" class="btn"><%= @projects.get(@current_project).title %></a>
+			<button class="btn dropdown-toggle" data-toggle="dropdown">
+			<span class="caret"></span>
+			</button>
 			<ul class="dropdown-menu">
-				<% @projects.each do |project| %>
+			<% @projects.each do |project| %>
 				<li><a href="/admin/project/switch/<%=project.id %>"><%=project.title %></a></li>
 				<% end %>
 			</ul>

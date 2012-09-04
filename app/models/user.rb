@@ -1,6 +1,5 @@
 module Tasks
 	class User
-	
 		include DataMapper::Resource
 		
 		attr_accessor :password
@@ -21,14 +20,14 @@ module Tasks
 		
 		def validate_password
 			if self.saved?
-				true
+				return true
 			else
 				if password.nil?
-					false
+					return [false, 'Password must not be empty']
 				elsif password.length < 8
-					false
+					return [false, 'Password be 8 or more characters']
 				else
-					true
+					return true
 				end
 			end
 		end
@@ -51,6 +50,5 @@ module Tasks
 				nil
 			end
 		end
-		
 	end
 end

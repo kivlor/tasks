@@ -1,22 +1,16 @@
 module Tasks
-
 	class Public < App
-		
-		#home!
-		get '/' do
-			if admin?
-			   redirect '/admin'
-			end
-			
-			erb :'public/index'
-		end
-		
-		# user sign in/up
-		get '/signin' do
+		before do
 			if admin?
 				redirect '/admin'
 			end
+		end
+	
+		get '/' do
+			erb :'public/index'
+		end
 		
+		get '/signin' do
 			erb :'public/signin'
 		end
 		
@@ -24,15 +18,16 @@ module Tasks
 			user = User.authenticate(params[:email], params[:password])
 			
 			if user
-			   session[:user_id] = user.id
-			   
-			   redirect '/admin'
+				session[:user_id] = user.id
+				
+				redirect '/admin'
 			else
-			   session[:user_id] = nil
-			   
-			   redirect '/error'
+				session[:user_id] = nil
+				
+				flash[:error] = ['Invalid email/password']
+				
+				redirect '/signin'
 			end
-		
 		end
 		
 		get '/signout' do
@@ -49,9 +44,13 @@ module Tasks
 			
 			#validate password
 			if params[:password].empty? || params[:password2].empty?
-				redirect '/error'
+				flash[:error] = ['Password/Confirm Password must not be empty']
+				
+				redirect '/signup'
 			elsif params[:password] != params[:password2]
-				redirect '/error'
+				flash[:error] = ['Password and Confirm Password must match']
+				
+				redirect '/signup'
 			end
 			
 			user = User.new(:email => params[:email], :password => params[:password])
@@ -61,11 +60,12 @@ module Tasks
 				
 				redirect '/admin'
 			else
-				redirect '/error'
+				flash[:error] = user.errors.values.flatten
+				
+				redirect '/signup'
 			end
 		end
-				
-		#errors!
+		
 		get '/error' do
 			'an error occured, <a href="/">return home?</a>'
 		end

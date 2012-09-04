@@ -1,13 +1,20 @@
 <form action="/admin/task/<%= @task ? "edit/#{@task.id}" : 'add' %>" method="post">
 	<p>
-		<label for="title">Task Title:</label>
+		<label for="title">Title:</label>
 		<input type="text" name="title" value="<%= @task ? @task.title : nil %>">
 	</p>
 	
 	<p>
+		<label for="description">Description:</label>
+		<textarea name="description" rows="5" class="input-xxlarge"><%= @task ? @task.description : nil %></textarea>
+	</p>
+	
+	<% if @task %>
+	<p>
 		<label for="percent">Percentage Completed:</label>
 		<input type="text" name="percent" value="<%= @task ? @task.percent : 0 %>">
 	</p>
+	<% end %>
 	
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary"><%= @task ? 'Update' : 'Add' %> Task</button>

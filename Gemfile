@@ -8,6 +8,7 @@ gem		'sinatra',				:require => 'sinatra/base'
 gem		'rack-flash3',			:require => 'rack/flash'
 
 # Utils
+gem		'time-ago-in-words'
 gem		'json'
 gem		'bcrypt-ruby',			:require => 'bcrypt'
 

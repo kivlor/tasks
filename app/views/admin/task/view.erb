@@ -1,0 +1,34 @@
+<div>
+	<h3><%= @task.title %></h3>
+	<p><%= @task.description %></p>
+	<p><a href="/admin/task/edit/<%= @task.id %>" class="btn btn-small">Edit Task</a></p>
+</div>
+
+<hr>
+
+<div>
+	<h4>Comments</h4>
+	
+<% if @comments.empty? %>
+	<p>No Comments</p>
+<% else %>
+	<% @comments.each do |comment| %>
+	<article>
+		<p><%= comment.comment %></p>
+		<p class="muted"><small>Added by <%= comment.user.email %> <%= Time.parse(comment.created_at.to_s).ago_in_words %></small></p>
+	</article>
+	<% end %>
+	
+	<hr>
+<% end %>
+
+	<form action="/admin/task/comment/<%= @task.id %>" method="post">
+		<p>
+			<textarea name="comment" rows="3" class="input-xxlarge"></textarea>
+		</p>
+		
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Add Comment</button>
+		</div>
+	</form>
+</div>
