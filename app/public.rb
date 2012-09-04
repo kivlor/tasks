@@ -24,11 +24,11 @@ module Tasks
 			user = User.authenticate(params[:email], params[:password])
 			
 			if user
-			   session[:user] = user
+			   session[:user_id] = user.id
 			   
 			   redirect '/admin'
 			else
-			   session[:user] = nil
+			   session[:user_id] = nil
 			   
 			   redirect '/error'
 			end
@@ -36,7 +36,8 @@ module Tasks
 		end
 		
 		get '/signout' do
-			session[:user] = nil
+			session[:user_id] = nil
+			
 			redirect '/'
 		end
 		
@@ -56,7 +57,8 @@ module Tasks
 			user = User.new(:email => params[:email], :password => params[:password])
 			
 			if user.valid? && user.save
-				session[:user] = user
+				session[:user_id] = user.id
+				
 				redirect '/admin'
 			else
 				redirect '/error'

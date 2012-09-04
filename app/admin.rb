@@ -41,9 +41,13 @@ module Tasks
 			if project.valid? && project.save
 				current_project(project.id)
 				
+				flash[:success] = ["Project '#{params[:title]}' has been added"]
+				
 				redirect '/admin'
 			else
-				redirect '/error'
+				flash[:error] = project.errors.values.flatten
+				
+				redirect "/admin/project/add"
 			end
 		end
 		
@@ -54,12 +58,16 @@ module Tasks
 		post '/task/add' do
 			project = Project.get(@current_project)
 			
-			project.tasks.new(:title => params[:title])
+			task = project.tasks.new(:title => params[:title])
 			
-			if project.tasks.valid? && project.tasks.save
+			if task.valid? && task.save
+				flash[:success] = ["Task '#{params[:title]}' has been added"]
+				
 				redirect '/admin'
 			else
-				redirect '/error'
+				flash[:error] = task.errors.values.flatten
+				
+				redirect "/admin/task/add"
 			end
 		end
 		
@@ -69,7 +77,9 @@ module Tasks
 			if @task
 				erb :'admin/task'	
 			else
-				redirect '/error'
+				flash[:error] = ["Task ##{:task_id} no longer exists"]
+				
+				redirect '/admin'
 			end
 		end
 		
@@ -77,9 +87,13 @@ module Tasks
 			task = Task.get(params[:task_id])
 			
 			if task && task.update(:title => params[:title], :percent => params[:percent].to_i)
+				flash[:success] = ["Task '#{params[:title]}' has been updated"]
+				
 				redirect '/admin'
 			else
-				redirect '/error'
+				flash[:error] = task.errors.values.flatten
+				
+				redirect "/admin/task/edit/#{params[:task_id]}"
 			end
 		end
 		

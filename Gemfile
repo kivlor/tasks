@@ -4,6 +4,9 @@ source :rubygems
 # Sinatra
 gem		'sinatra',				:require => 'sinatra/base'
 
+# Rack
+gem		'rack-flash3',			:require => 'rack/flash'
+
 # Utils
 gem		'json'
 gem		'bcrypt-ruby',			:require => 'bcrypt'

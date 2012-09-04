@@ -35,6 +35,20 @@
 		</div>
 		
 		<div class="container">
+			<% if flash[:success] %>
+			<div class="alert alert-success">
+				<% flash[:success].each do |msg| %>
+				<%= msg %><br>
+				<% end %>
+			</div>
+			<% elsif flash[:error] %>
+			<div class="alert alert-error">
+				<% flash[:error].each do |msg| %>
+				<%= msg %><br>
+				<% end %>
+			</div>
+			<% end %>
+			
 			<% if admin? %>
 			<%= erb :'admin/nav' %>
 			<% end %>
@@ -49,7 +63,7 @@
 				</div>
 			</div>
 		</div>
-				
+		
 		<script src="/js/vendor/jquery.min.js"></script>
 		<script src="/js/vendor/bootstrap.min.js"></script>
 	</body>
