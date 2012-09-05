@@ -15,6 +15,7 @@
 				<tr>
 					<th>#</th>
 					<th>Title</th>
+					<th><i class="icon-comment"></i></th>
 					<th>Percent</th>
 					<th>Created</th>
 					<th class="btn-group-placeholder"></th>
@@ -24,8 +25,9 @@
 			<tbody>
 			<% @open_tasks.each do |task| %>
 				<tr>
-					<td><%= task.id %></td>
-					<td><%= task.title %></td>
+					<td><a href="/admin/task/view/<%= task.id %>"><%= task.id %></a></td>
+					<td><a href="/admin/task/view/<%= task.id %>"><%= task.title %></a></td>
+					<th><%= task.comments.count() %></th>
 					<td><div class="progress progress-striped progress-success span2">
 						<div class="bar" style="width: <%= task.percent.to_int %>%"></div>
 					</div></td>
@@ -60,6 +62,7 @@
 				<tr>
 					<th>#</th>
 					<th>Title</th>
+					<th><i class="icon-comment"></i></th>
 					<th>Percent</th>
 					<th>Completed</th>
 					<th class="btn-group-placeholder"></th>
@@ -69,8 +72,9 @@
 			<tbody>
 			<% @closed_tasks.each do |task| %>
 				<tr>
-					<td><%= task.id %></td>
-					<td><%= task.title %></td>
+					<td><a href="/admin/task/view/<%= task.id %>"><%= task.id %></a></td>
+					<td><a href="/admin/task/view/<%= task.id %>"><%= task.title %></a></td>
+					<th><%= task.comments.count() %></th>
 					<td>
 						<div class="progress progress-striped progress-success span2">
 							<div class="bar" style="width: <%= task.percent.to_int %>%"></div>

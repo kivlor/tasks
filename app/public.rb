@@ -1,16 +1,25 @@
 module Tasks
 	class Public < App
-		before do
+
+		#-----------------------------
+		#
+		#	Oh Hai!
+		#
+		#-----------------------------
+	
+		get '/' do
 			if admin?
 				redirect '/admin'
 			end
-		end
-	
-		get '/' do
+		
 			erb :'public/index'
 		end
 		
 		get '/signin' do
+			if admin?
+				redirect '/admin'
+			end
+			
 			erb :'public/signin'
 		end
 		
@@ -37,6 +46,10 @@ module Tasks
 		end
 		
 		get '/signup' do
+			if admin?
+				redirect '/admin'
+			end
+		
 			erb :'public/signup'
 		end
 		
@@ -64,10 +77,6 @@ module Tasks
 				
 				redirect '/signup'
 			end
-		end
-		
-		get '/error' do
-			'an error occured, <a href="/">return home?</a>'
 		end
 	end
 end
